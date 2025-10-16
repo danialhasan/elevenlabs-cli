@@ -43,12 +43,7 @@ describe('ElevenLabsClient', () => {
       const result = await client.getConversation(mockConversationId);
 
       expect(mockGet).toHaveBeenCalledWith(
-        `/conversationalAi/conversations.get`,
-        {
-          params: {
-            conversation_id: mockConversationId
-          }
-        }
+        `/v1/convai/conversations/${mockConversationId}`
       );
 
       expect(result).toEqual(mockResponse.data);
@@ -88,11 +83,10 @@ describe('ElevenLabsClient', () => {
       const result = await client.listConversations({ limit: 10, offset: 0 });
 
       expect(mockGet).toHaveBeenCalledWith(
-        `/conversationalAi/conversations.list`,
+        `/v1/convai/conversations`,
         {
           params: {
-            limit: 10,
-            offset: 0
+            page_size: 10
           }
         }
       );
@@ -114,11 +108,8 @@ describe('ElevenLabsClient', () => {
       const result = await client.getAudio(mockConversationId);
 
       expect(mockGet).toHaveBeenCalledWith(
-        `/conversationalAi/conversations/audio.get`,
+        `/v1/convai/conversations/${mockConversationId}/audio`,
         {
-          params: {
-            conversation_id: mockConversationId
-          },
           responseType: 'arraybuffer'
         }
       );
