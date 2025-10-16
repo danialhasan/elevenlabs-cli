@@ -1,14 +1,11 @@
 #!/usr/bin/env node
 
 import { Command } from 'commander';
-import * as dotenv from 'dotenv';
 import { getCommand } from './commands/get';
 import { listCommand } from './commands/list';
 import { analyzeCommand } from './commands/analyze';
 import { audioCommand } from './commands/audio';
-
-// Load environment variables
-dotenv.config();
+import { loadConfig } from './lib/config';
 
 const program = new Command();
 
@@ -17,15 +14,15 @@ program
   .description('CLI tool for analyzing ElevenLabs conversational AI calls')
   .version('1.0.0');
 
-// Helper to get API key
+// Helper to get API key with automatic .env loading
 function getApiKey(cmdApiKey?: string): string {
-  const apiKey = cmdApiKey || process.env.ELEVENLABS_API_KEY;
-  if (!apiKey) {
-    console.error('✗ Error: ELEVENLABS_API_KEY not found.');
-    console.error('  Set it via environment variable or use --api-key flag.');
+  try {
+    const config = loadConfig({ apiKey: cmdApiKey });
+    return config.apiKey;
+  } catch (error) {
+    console.error(`✗ Error: ${error instanceof Error ? error.message : String(error)}`);
     process.exit(1);
   }
-  return apiKey;
 }
 
 // Get command
