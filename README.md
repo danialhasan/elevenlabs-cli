@@ -36,20 +36,29 @@ Debug and analyze ElevenLabs Conversational AI calls with detailed insights into
 - **npm** or **pnpm**
 - **ElevenLabs API Key** - Get yours at [elevenlabs.io/app/settings/api-keys](https://elevenlabs.io/app/settings/api-keys)
 
-### Quick Start
+### Quick Start (Recommended)
+
+**One-liner install from GitHub:**
+
+```bash
+# Install directly from GitHub (automatic build)
+npm install -g github:danialhasan/elevenlabs-cli
+
+# Verify installation
+elevenlabs-cli --version
+```
+
+**Alternative: Clone and install manually:**
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/elevenlabs-cli.git
+git clone https://github.com/danialhasan/elevenlabs-cli.git
 cd elevenlabs-cli
 
-# Install dependencies
+# Install dependencies and build (prepare script runs automatically)
 npm install
 
-# Build TypeScript
-npm run build
-
-# Link globally (makes 'elevenlabs-cli' available everywhere)
+# Link globally
 npm link
 
 # Verify installation
@@ -58,19 +67,24 @@ elevenlabs-cli --version
 
 ### Configuration
 
-Set your ElevenLabs API key using one of these methods:
+**Set your API key** (automatically loaded from `.env` file):
 
 ```bash
-# Option 1: Environment variable (recommended)
+# Option 1: .env file (recommended - automatic loading)
+cp .env.example .env
+# Edit .env and add your API key:
+# ELEVENLABS_API_KEY=sk_your_key_here
+
+# Option 2: Environment variable
 export ELEVENLABS_API_KEY="your_api_key_here"
 
-# Option 2: .env file
-cp .env.example .env
-# Edit .env and add your API key
-
-# Option 3: Pass via --api-key flag on each command
+# Option 3: Pass via --api-key flag (override)
 elevenlabs-cli list --api-key "your_key"
 ```
+
+**Priority:** `--api-key` flag > `.env` file > environment variable
+
+No flag needed when using `.env` file!
 
 ## 🚀 Usage
 
